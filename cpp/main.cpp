@@ -14,8 +14,11 @@ class HumanBeing{
 }; // semicolon is required
 
 int main(){
-    HumanBeing person;
+    HumanBeing person; // object created in stack
     person.display(); // call the function using dot operator
     person.name = "Alice";
     person.introduce();
+    HumanBeing* personPtr = new HumanBeing(); // object created in heap, dynamically allocated
+    personPtr->name = "Bob";
+    personPtr->introduce();
 }
