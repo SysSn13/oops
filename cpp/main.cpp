@@ -13,7 +13,13 @@ public: // access specifier
     // - must be defined in the public section
     // - must have the same name as the class
     // - must have no return type
-    
+
+    HumanBeing(){
+        this->name = "NONE";
+        this->age = 0;
+    }
+
+    // we can overload constructor. e.g.:
     HumanBeing(string name, int age){
         cout<<"Constructor called"<<endl;
         this->name = name;
@@ -41,7 +47,7 @@ void HumanBeing::method1(){
 
 
 int main(){
-    HumanBeing person("",18); // object created in stack
+    HumanBeing person; // object created in stack
     person.display(); // call the function using dot operator
     person.name = "Alice";
     person.introduce();
