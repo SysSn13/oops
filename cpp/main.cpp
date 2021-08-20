@@ -8,6 +8,18 @@ private: // private access specifier only accessible within the class
 public: // access specifier
     // available outside the class
     string name;
+
+    // constructor,a special function which is called when a object is created.
+    // - must be defined in the public section
+    // - must have the same name as the class
+    // - must have no return type
+    
+    HumanBeing(string name, int age){
+        cout<<"Constructor called"<<endl;
+        this->name = name;
+        this->age = age;
+    }
+
     void display(){
         cout<<"I am a human being"<<endl;
     }
@@ -29,11 +41,11 @@ void HumanBeing::method1(){
 
 
 int main(){
-    HumanBeing person; // object created in stack
+    HumanBeing person("",18); // object created in stack
     person.display(); // call the function using dot operator
     person.name = "Alice";
     person.introduce();
-    HumanBeing* personPtr = new HumanBeing(); // object created in heap, dynamically allocated
+    HumanBeing* personPtr = new HumanBeing("",14); // object created in heap, dynamically allocated
     personPtr->name = "Bob";
     
     // personPtr->age = 18; // error as age is private
