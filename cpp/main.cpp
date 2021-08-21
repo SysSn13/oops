@@ -9,7 +9,7 @@ public: // access specifier
     // available outside the class
     string name;
 
-    // constructor,a special function which is called when a object is created.
+    // constructor,a special function which is executed when a object is created.
     // - must be defined in the public section
     // - must have the same name as the class
     // - must have no return type
@@ -18,9 +18,17 @@ public: // access specifier
         this->name = "NONE";
         this->age = 0;
     }
+    // destructor, a special function which is executed when a object is destroyed.
+    // - must be defined in the public section
+    // - must have the same name as the class
+    // - must have no return type
+    // tilde symbol is used before the function name
+    ~HumanBeing(){
+        cout<<name<<" is being destroyed"<<endl;
+    }
 
     // we can overload constructor. e.g.:
-    HumanBeing(string name, int age){
+    HumanBeing(string name, int age=0 ){
         cout<<"Constructor called"<<endl;
         this->name = name;
         this->age = age;
@@ -61,4 +69,6 @@ int main(){
     personPtr->introduce();
 
     personPtr->method1();
+
+    delete personPtr; // delete the object
 }
