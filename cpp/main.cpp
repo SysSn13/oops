@@ -8,7 +8,7 @@ private: // private access specifier only accessible within the class
 public: // access specifier
     // available outside the class
     string name;
-
+    string *temp;
     // constructor,a special function which is executed when a object is created.
     // - must be defined in the public section
     // - must have the same name as the class
@@ -17,6 +17,8 @@ public: // access specifier
     HumanBeing(){
         this->name = "NONE";
         this->age = 0;
+        temp  = new string;
+        *temp = "NONE";
     }
     // destructor, a special function which is executed when a object is destroyed.
     // - must be defined in the public section
@@ -25,6 +27,7 @@ public: // access specifier
     // tilde symbol is used before the function name
     ~HumanBeing(){
         cout<<name<<" is being destroyed"<<endl;
+        delete temp; // release the memory
     }
 
     // we can overload constructor. e.g.:
