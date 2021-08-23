@@ -2,11 +2,27 @@
 #include <string>
 using namespace std;
 
+
+
+/*
+Access modes for a class member:
+    1. public:
+        accessible from anywhere
+    2. private:
+        accessible only from within the class
+    3. protected:
+        accessible from within the class and from derived classes
+        - like private members, protected members are inaccessible outside of the class. However, they can be accessed by derived classes and friend classes/functions.
+
+default access modifier: private
+*/
+
 class HumanBeing{
+protected:
+    string address;
 private: // private access specifier only accessible within the class
     int age;
 public: // access specifier
-    // available outside the class
     string name;
     string *temp;
     // Since c++17 you can declare static members inline and instantiate them inside the body of class without the need of an out-of-class definition
@@ -88,34 +104,54 @@ void HumanBeing::method1(){
 // count will be zero-initialized.
 int HumanBeing::count = 0; 
 
-
 void displayAge(HumanBeing &person){
     cout<<"(friend funtion) Age: "<<person.age<<endl;
 }
 
-
-
 // Inheritence
+// it is an is-a relationship. We use inheritance only if an is-a relationship is present between the two classes.
 // - a class can inherit members from another class
 // - code reusebility, reuse the code of another class
 // - scaleability, we can create a hierarchy of classes
+/*
+                   |  public | private | protected    |
+        accessible |   1     |    0    |       1      |
 
-/* syntax:  
-                        |->access specifier
-*class DerivedClass : public BaseClass{
-*                   |->colon 
-*};
+syntax:  
+                            |->access specifier (default: private])
+    class DerivedClass : public BaseClass{
+                    |->colon 
+    };
 */
-//                 |-> all the members of the base class except the private members are accessible in the derived class
+
+/* access modifiers for inheritance
+    1. public: 
+        change in access mode: No change. same as base class
+
+    2. private:
+        change in access mode: all the members of base class become private members of the derived class
+        - accessible only from within the derived class
+
+        public  ->   private
+        protected -> private
+
+    3. protected:
+        change in access mode: public members of base class become protected members of the derived class
+
+        public -> protected
+
+*/
+
 class Student : public HumanBeing{
-    public:
+public:
     int stundetId;
     string school;                  
     
     // contrstructor for derived class
     Student(string name,string school,int age,int studentId):HumanBeing(name,age),school(school),stundetId(studentId){}
     
-    // function overriding
+    // member function overriding
+    // - function of derived class is invoked instead of base class function
     void introduce(){
         cout<<"My name is "<<name<<". I'm "<<getAge()<<" year old. I'm a student at "<<school<<" school. My student id is "<<stundetId<<endl;
     }
