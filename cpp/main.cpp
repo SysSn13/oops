@@ -38,9 +38,8 @@ public: // access specifier
     }
 
     // we can overload constructor. e.g.:
-    HumanBeing(string name, int age=0 ){
+    HumanBeing(string name, int age=0 ):name(name){
         cout<<"Constructor called"<<endl;
-        this->name = name;
         this->age = age;
         count++;
     }
@@ -50,6 +49,9 @@ public: // access specifier
     }
     void setAge(int age){
         this->age = age;
+    }
+    int getAge(){
+        return age;
     }
     void introduce(){
         cout<<"My name is "<<name<<". I'm "<<age<<" year old."<<endl;
@@ -90,6 +92,35 @@ int HumanBeing::count = 0;
 void displayAge(HumanBeing &person){
     cout<<"(friend funtion) Age: "<<person.age<<endl;
 }
+
+
+
+// Inheritence
+// - a class can inherit members from another class
+// - code reusebility, reuse the code of another class
+// - scaleability, we can create a hierarchy of classes
+
+/* syntax:  
+                        |->access specifier
+*class DerivedClass : public BaseClass{
+*                   |->colon 
+*};
+*/
+//                 |-> all the members of the base class except the private members are accessible in the derived class
+class Student : public HumanBeing{
+    public:
+    int stundetId;
+    string school;                  
+    
+    // contrstructor for derived class
+    Student(string name,string school,int age,int studentId):HumanBeing(name,age),school(school),stundetId(studentId){}
+    
+    // function overriding
+    void introduce(){
+        cout<<"My name is "<<name<<". I'm "<<getAge()<<" year old. I'm a student at "<<school<<" school. My student id is "<<stundetId<<endl;
+    }
+};
+
 int main(){
     HumanBeing person; // object created in stack
     person.display(); // call the function using dot operator
@@ -113,4 +144,11 @@ int main(){
     // calling a friend function
     displayAge(person);
     delete personPtr; // delete the object
+
+
+    // Inheritence
+    Student *student = new Student("Alice", "MIT", 18, 123);
+    student->introduce();
+
+    delete student;
 }
