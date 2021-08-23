@@ -9,6 +9,11 @@ public: // access specifier
     // available outside the class
     string name;
     string *temp;
+    // Since c++17 you can declare static members inline and instantiate them inside the body of class without the need of an out-of-class definition
+    // like this: inline static int count = 0;
+    
+    static int count; // static variable, will be shared by all instances of the class
+
     // constructor,a special function which is executed when a object is created.
     // - must be defined in the public section
     // - must have the same name as the class
@@ -19,7 +24,9 @@ public: // access specifier
         this->age = 0;
         temp  = new string;
         *temp = "NONE";
+        count++;
     }
+
     // destructor, a special function which is executed when a object is destroyed.
     // - must be defined in the public section
     // - must have the same name as the class
@@ -35,6 +42,7 @@ public: // access specifier
         cout<<"Constructor called"<<endl;
         this->name = name;
         this->age = age;
+        count++;
     }
 
     void display(){
@@ -47,6 +55,18 @@ public: // access specifier
         cout<<"My name is "<<name<<". I'm "<<age<<" year old."<<endl;
     }
     void method1();
+
+    void displayCount(){
+        cout<<"Human being count: "<<count<<endl;
+    }
+
+    // static method
+    // - can be called without creating an object
+    // - method will be shared by all instances of the class
+    // - we can only use static variables and functions in static methods
+    static void humanCount(){
+        cout<<"(static method )Human being count: "<<count<<endl;
+    }
 }; // semicolon is required
 
 // defining method outside the class using scope resolution operator
@@ -55,6 +75,12 @@ void HumanBeing::method1(){
 }
 
 // HumanBeing::name = "Alice" will cause error as we cannot assign value to a non-static member
+
+// we need to provide a defination for static member variable
+// Notice, that the
+// initializer is not required: if absent,
+// count will be zero-initialized.
+int HumanBeing::count = 0; 
 
 
 int main(){
@@ -72,6 +98,10 @@ int main(){
     personPtr->introduce();
 
     personPtr->method1();
+    personPtr->displayCount();
+
+    // calling static method using class name and scope resolution operator
+    HumanBeing::humanCount();
 
     delete personPtr; // delete the object
 }
