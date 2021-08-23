@@ -11,7 +11,7 @@ public: // access specifier
     string *temp;
     // Since c++17 you can declare static members inline and instantiate them inside the body of class without the need of an out-of-class definition
     // like this: inline static int count = 0;
-    
+
     static int count; // static variable, will be shared by all instances of the class
 
     // constructor,a special function which is executed when a object is created.
@@ -67,6 +67,10 @@ public: // access specifier
     static void humanCount(){
         cout<<"(static method )Human being count: "<<count<<endl;
     }
+    
+    // when we want to access the private properties of a class from outside the class, we can use friend function
+    friend void displayAge(HumanBeing &person);
+
 }; // semicolon is required
 
 // defining method outside the class using scope resolution operator
@@ -83,6 +87,9 @@ void HumanBeing::method1(){
 int HumanBeing::count = 0; 
 
 
+void displayAge(HumanBeing &person){
+    cout<<"(friend funtion) Age: "<<person.age<<endl;
+}
 int main(){
     HumanBeing person; // object created in stack
     person.display(); // call the function using dot operator
@@ -102,6 +109,8 @@ int main(){
 
     // calling static method using class name and scope resolution operator
     HumanBeing::humanCount();
-
+    
+    // calling a friend function
+    displayAge(person);
     delete personPtr; // delete the object
 }
