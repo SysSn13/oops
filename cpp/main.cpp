@@ -146,7 +146,8 @@ class Student : public HumanBeing{
 public:
     int stundetId;
     string school;                  
-    
+    using HumanBeing :: address; // change the access mode of address from protected to public
+
     // contrstructor for derived class
     Student(string name,string school,int age,int studentId):HumanBeing(name,age),school(school),stundetId(studentId){}
     
