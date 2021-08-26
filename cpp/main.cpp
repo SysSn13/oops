@@ -333,5 +333,63 @@ others will be same
 constructor call order: A,B,C,D
 */
 
+/* Nested class
+
+    - a class can have another class as a member
+
+    class OuterClass{
+        public:
+            string var;
+            class InnerClass{ // only avaialble in the scope of OuterClass
+                public:
+                    string val;
+                    void method(){
+                        cout<<"InnerClass"<<endl;
+                    }
+            };
+            InnerClass inner;
+
+            void displayInner(){
+                cout<<inner.val<<endl;
+            }
+    }
+
+
+    Creating object:
+
+    OuterClass outer;
+    outer.var = "outer";
+    outer.inner.val = "Hello";
+    outer.inner.method();
+    outer.displayInner();
+
+    // creating an object of inner class
+    OuterClass::InnerClass inner;
+    inner.val = "inner";
+*/
+
+
+/* Local class
+    - class only available in the scope of the function
+
+void studentList(){
+
+    class Student{
+        public:
+        string name;
+        int age;
+        Student(string name,int age):name(name),age(age){}
+        void introduce(){
+            cout<<"My name is "<<name<<". I'm "<<age<<" year old."<<endl;
+        }        
+    }
+    Student student1("Alice",18);
+    Student student2("Bob",19);
+
+    student1.introduce();
+    ...
+}
+
+*/
 
 
