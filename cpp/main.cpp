@@ -78,6 +78,11 @@ public: // access specifier
         cout<<"Human being count: "<<count<<endl;
     }
 
+    // virtual function
+    virtual void about(){
+        cout<<"I am a human being"<<endl;
+    }
+
     // static method
     // - can be called without creating an object
     // - method will be shared by all instances of the class
@@ -142,19 +147,101 @@ syntax:
 
 */
 
+
+/*  Order of calling constructor and destructor
+    during object creation:
+        1. BaseClass
+        2. DerivedClass
+    during object destruction:
+        1. DerivedClass
+        2. BaseClass
+*/  
+
+// Multiply inheritance
+
+/*
+    class DerivedClass : public BaseClass, public BaseClass2{
+
+    };
+*/
+
+
 class Student : public HumanBeing{
 public:
     int stundetId;
     string school;                  
     using HumanBeing :: address; // change the access mode of address from protected to public
 
-    // contrstructor for derived class
+    // contrstructor for derived class                          |-> passing values to base class constructor
     Student(string name,string school,int age,int studentId):HumanBeing(name,age),school(school),stundetId(studentId){}
     
     // member function overriding
     // - function of derived class is invoked instead of base class function
     void introduce(){
         cout<<"My name is "<<name<<". I'm "<<getAge()<<" year old. I'm a student at "<<school<<" school. My student id is "<<stundetId<<endl;
+        // access the overriden member function
+        // HumanBeing::introduce();
+    }
+
+    void about(){
+        cout<<"I am a student"<<endl;
+    } 
+};
+
+
+
+/* Virtual function
+    - a function which is defined in a base class with virtual keyword
+    - if a derived class overrides the function, then overridden function will be called instead of base class function
+    - virtal nature of a function is also inherited by derived class so the function will be virtual in derived class as well
+    Polimorphism:
+        many forms
+        it occurs when there is herirachy of classes and they are related by inheritance
+*/
+
+class Teacher : public HumanBeing{
+    public:
+    int teacherId;
+    Teacher(string name,int age,int teacherId):HumanBeing(name,age),teacherId(teacherId){}
+    void about(){
+        cout<<"I am a teacher"<<endl;
+    }
+};
+// example of polimorphism
+void whoIs(HumanBeing *person){
+    person->about();
+    // here if person is a student, then it will call student::about()
+    // if person is a teacher, then it will call teacher::about()
+    // because 'about' method is a virtual function in the base class
+    // we can see, the function is called depending on the type of the object
+}
+
+
+/* Pure virtual function / Abstract class
+Syntax:
+    virtual void methodName()=0;
+    
+    - methodName() is a pure virtual function
+    - if derived class does not override this function, then compiler will generate an error
+    - If a class has at least one pure virtual function, then it is called a abstract class
+    - we cannnot create an object of an abstract class
+*/
+
+class AbstractClassExample{
+    public:
+    virtual void method1()=0;
+};
+
+// defining the pure virtual function of a Abstract class
+void AbstractClassExample::method1(){
+    cout<<"From abstract class"<<endl;
+}
+
+class DerivedFromAbstract : public AbstractClassExample{
+    public:
+    void method1(){
+        cout<<"From derived class"<<endl;
+        AbstractClassExample::method1(); // calling the pure virtual function from the base class
     }
 };
 
@@ -187,5 +274,64 @@ int main(){
     Student *student = new Student("Alice", "MIT", 18, 123);
     student->introduce();
 
+    // calling the overriden function
+    student->HumanBeing::introduce();
+
+    // polymorphism concept
+    Teacher *teacher = new Teacher("Bob", 18, 567);
+    whoIs(student);
+    whoIs(teacher);
     delete student;
+
+
+    // abstract class
+    DerivedFromAbstract *abstructExample = new DerivedFromAbstract();
+    abstructExample->method1();
+    delete abstructExample;
 }
+
+
+/* Diamond problem  
+
+class A{
+public:
+    vois method(){
+
+    }
+  ...  
+};
+
+class B: public A{
+  ...
+};
+
+class C: public A{
+  ...
+};
+
+class D : public B, public C{
+
+};
+
+D *d = new D();
+d->method();
+now we have a diamond problem because there is ambiquity in the inheritance hierarchy
+
+solution:
+    virtual inheritance
+
+class B: virtual public A{
+
+};
+
+class C: virtual public A{
+
+};
+
+others will be same
+
+constructor call order: A,B,C,D
+*/
+
+
+
