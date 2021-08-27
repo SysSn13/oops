@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 
@@ -244,7 +245,7 @@ class DerivedFromAbstract : public AbstractClassExample{
         AbstractClassExample::method1(); // calling the pure virtual function from the base class
     }
 };
-
+/*
 int main(){
     HumanBeing person; // object created in stack
     person.display(); // call the function using dot operator
@@ -290,6 +291,7 @@ int main(){
     delete abstructExample;
 }
 
+*/
 
 /* Diamond problem  
 
@@ -392,4 +394,134 @@ void studentList(){
 
 */
 
+
+
+/* Operator overloading
+
+
+class Avg{
+public:
+    int total;
+    int count;
+    double average;
+    Avg(){}
+    Avg(int total,int count):total(total),count(count){
+        if(count<=0)
+            average = -1;
+        else
+            average = (total+0.0)/(count+0.0);
+    }
+    // overloading the + operator
+    Avg operator+(Avg a){ //  return type can be anything
+        int total_cnt = a.count + count;
+        int total_sum = a.total + total;
+        return Avg(total_sum,total_cnt);
+    }
+    Avg operator-(Avg a);
+
+    
+    // No need to pass the class object
+    void operator +=(int bonus){
+        total += bonus;
+    }
+    // for a friend function we have to pass the object explicilty
+    friend void operator-=(Avg &a,int bonus){
+        a.total -= bonus;
+    }
+    Avg operator--(){ // prefix
+        total -= 1;
+        return *this;
+    }
+    Avg operator--(int){ // postfix
+        Avg duplicate = Avg(*this);
+        total -= 1;
+        return duplicate;
+    }
+
+    friend Avg operator++(Avg &); // prefix
+    friend Avg operator++(Avg &,int); // postfix 
+};
+
+Avg Avg::operator-(Avg a){
+    int total_cnt = count - a.count;
+    int total_sum = total - a.total;
+    return Avg(total_sum,total_cnt);
+}
+Avg operator++(Avg &a){
+    a.total += 1;
+    return a;
+}
+
+
+Avg operator++(Avg &a,int){
+    Avg res(a);
+    a.total +=1;
+    return res; // returning a duplicate
+}
+
+class Values{
+public:
+    vector<int> v;
+    Values(int a,int b,int c){
+        v = {a,b,c};
+    }
+
+    // since it is a specical operator in c++ we can not overload it using friend function
+    // overloading special [] subscript operator
+    int operator[](int ind){
+        return v[ind];
+    }
+    
+    // overloading special () function call operator
+    void operator()(int a){
+        // do something
+        v.back() = a;
+    }
+
+    // overloading class member operator
+    Values *operator->(){
+        return this;
+    }
+};
+
+int main(){
+    Avg a = Avg(6,2); 
+    cout<<a.average<<endl;
+    Avg b = Avg(10,4);
+    cout<<b.average<<endl;
+    Avg c = b - a;
+    cout<<c.count<<" "<<c.total<<" "<<c.average<<endl;
+
+    c += 6;
+    c -=1;
+    cout<<c.total<<endl;    
+    cout<<(++c).total<<" "<<c.total<<endl;
+    cout<<(c++).total<<" "<<c.total<<endl;
+    cout<<(--c).total<<" "<<c.total<<endl;
+    cout<<(c--).total<<" "<<c.total<<endl;
+
+    Values v(2,5,1); // constructor call
+    cout<<v[2]<<endl;
+
+    v(10); // function call
+    cout<<v[2]<<endl;
+
+    //             |-> arrow operator 
+    for(auto ele:v->v){
+        cout<<ele<<" ";
+    }
+    cout<<endl;
+}
+
+/*
+Rules and restriction for overloading operator:
+
+    - by overloading an operator we can not change the precedence of the operator
+    - can not change the number of operands a operator takes
+    - can not overload these operators:
+        ? :: .* .
+
+*/
+
+// */
 
