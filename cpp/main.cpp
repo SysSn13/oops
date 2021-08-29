@@ -525,3 +525,82 @@ Rules and restriction for overloading operator:
 
 // */
 
+
+
+// /* Exception Handling
+#include <exception>
+#include <stdexcept>
+
+class OverSpeedException: public exception{
+ int speed;
+ public:
+    OverSpeedException(int speed):speed(speed){}
+
+    // override what() method
+    const char *what() const throw(){ 
+        return "Vehicle is overspeed";
+    }       
+    
+    int getSpeed(){
+        return speed;
+    }
+};
+
+void testException(){
+    throw runtime_error("Some error");
+}
+int main(){
+    int a = 10,b=1;
+    int c;
+    try{
+        if(b==0)
+            throw runtime_error("divide by zero error."); // runtime_error is a derived class of exception and it overrides the virtual what() function
+        c = a/b;
+        cout<<c<<endl;
+    }
+    catch(runtime_error &error){
+        cout<<"Exception caught: "<<error.what()<<endl;
+    }
+    catch(const char*error){
+        cout<<error<<endl;
+    }
+    catch(...){ // catches all the exception
+        cout<<"Exception caught"<<endl;
+    } 
+
+    try{
+        testException();
+
+        // nested try-catch
+        try{
+
+        } catch(...){
+
+            throw; // throws out of the inner try-catch
+        }
+    }
+    catch(int e){
+        cout<<"Exception caught: "<<e<<endl;
+    }
+    catch(const char *e){
+        cout<<"Exception caught: "<<e<<endl;
+    }
+    catch(runtime_error e){
+        cout<<"Exception caught: "<<e.what()<<endl;
+    }
+    catch(...){
+        cout<<"Unepected exception caught"<<endl;
+    }
+
+    // using custom exception
+    try{
+        int speed = 100;
+        throw OverSpeedException(speed);
+    }catch(OverSpeedException e){
+        cout<<"Exception caught: "<<e.what()<<endl;
+        cout<<"Speed: "<<e.getSpeed()<<endl;    
+    }
+    
+}
+// */
+
