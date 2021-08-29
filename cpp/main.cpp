@@ -527,7 +527,7 @@ Rules and restriction for overloading operator:
 
 
 
-// /* Exception Handling
+/* Exception Handling
 #include <exception>
 #include <stdexcept>
 
@@ -540,7 +540,7 @@ class OverSpeedException: public exception{
     const char *what() const throw(){ 
         return "Vehicle is overspeed";
     }       
-    
+
     int getSpeed(){
         return speed;
     }
@@ -602,5 +602,62 @@ int main(){
     }
     
 }
-// */
+*/
 
+/* Overriding new and delete operators
+class TestClass{
+public:
+    int age;
+    TestClass(int age):age(age){}
+    void print(){
+        cout<<"Age: "<<age<<endl;
+    }
+    void *operator new(size_t size){
+        cout<<"Allocating memory"<<endl;
+        void * pointer;
+        pointer = malloc(size);
+        if(!pointer){
+            throw bad_alloc();
+        }
+        return pointer;
+    }
+    void operator delete(void *pointer){
+        cout<<"Deallocating memory"<<endl;
+        free(pointer);
+    }
+};
+int main(){
+    TestClass *t = new TestClass(10);
+    t->print();
+    delete t;
+}
+
+*/
+
+
+/* Overriding stream insertion and stream extraction operators
+class Person{
+    public:
+    int age;
+    Person(int age):age(age){}
+    Person(){}
+    friend ostream &operator << (ostream &output,Person &p);
+    // steam extraction operator
+    friend istream &operator >> (istream &input, Person &p);
+};
+
+ostream &operator << (ostream &output,Person &p){
+    output<<"Age: "<<p.age<<endl;
+    return output;
+}
+istream &operator >> (istream &input,Person &p){
+    input>>p.age;
+    return input;
+}
+int main(){
+    Person p;
+    cin>>p;
+    cout<<p;
+}
+
+*/
