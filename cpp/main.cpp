@@ -395,6 +395,33 @@ void studentList(){
 */
 
 
+/* Copy constructor
+    // - when we use dynamic memory allocation, we need to copy the object to another object
+    // - copy constructor is called when we create a new object using an existing object
+
+class Person{
+    public:
+    string *name;
+    int age;
+    Person(string name,int age):name(new string(name)),age(age){}
+    // copy constructor
+    Person(const Person &other):name(new string(*other.name)),age(other.age){}
+
+    void introduce(){
+        cout<<"My name is "<<*name<<". I'm "<<age<<" year old."<<endl;
+    }
+};
+
+int main(){
+    Person person1("Alice",18);
+    Person person2(person1); // copy constructor is called
+    *person2.name = "Bob";
+    person2.age = 20;
+    person1.introduce();
+    person2.introduce();
+}
+
+*/
 
 /* Operator overloading
 
