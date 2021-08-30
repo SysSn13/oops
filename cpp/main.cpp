@@ -821,3 +821,96 @@ int main(){
 }
 
 */
+
+
+/*
+// Generic programming
+//         |-> typename or class
+
+template <typename T> void display(T value);
+template <typename T> void display(T x,T y);
+template <typename A,typename B> void display(A x,B y); // overloading generic functions
+template <typename T> void display1(T x,int y);
+template <typename T> T add(T x,T y);   
+
+void display(int x){ // overrides generic function for integer input
+    cout<<"overridden "<<x<<endl;
+}
+
+// or we can write this explicit function like this :-
+// template <> void display<int>(int x){
+//     cout<<"overridden "<<x<<endl;
+// }
+
+// generic class
+
+template <class T1,class T2> class MyClass{ // T1 a placeholder for the datatype we are going to use in the class
+    T1 p1;
+    T2 p2;
+public:
+    MyClass(T1 x, T2 y){
+        p1 = x;
+        p2 = y;
+    }
+    void display(){
+        cout<<p1<<" "<<p2<<endl;
+    }
+};
+
+// explicit specialization of generic class
+template <> class MyClass<int,int>{
+int p1,p2;
+public:
+    MyClass(int x,int y):p1(x),p2(y){}
+    void display(){
+        cout<<p1<<" "<<p2<<" explicit "<<endl;
+    }
+};
+
+// lets implement a generic Pair class
+//                  |-> default value (must start from right side in given args)
+template <class T1=int,class T2=int> class Pair{
+public:
+    T1 first;
+    T2 second;
+    Pair(){}
+    Pair(T1 first,T2 second):first(first),second(second){}
+};
+
+int main(){
+    display(10);
+    display(10,20);
+    display(10,"20");
+    display1("test",10);
+    display(add(1,2));
+    display(add(string("abc"),string("efg")));
+
+    MyClass<int,int> intObject(31,45);
+    MyClass<double,string> strObject(123.123,"str2");
+
+    intObject.display();
+    strObject.display();
+    Pair<int,string> obj(15,"test");
+    Pair<> defaultPair(1,2);
+    cout<<obj.first<<" "<<obj.second<<endl;
+    cout<<defaultPair.first<<" "<<defaultPair.second<<endl;
+}
+
+template <typename T> void display1(T x,int y){
+    while(y--)cout<<x<<" ";
+    cout<<endl;
+}
+
+template <typename T> void display(T value){
+    cout<<value<<endl;
+}
+template <typename T> void display(T x,T y){
+    cout<<x<<" "<<y<<endl;
+}
+template <typename A,typename B> void display(A x,B y){
+    cout<<x<<" "<<y<<endl;
+}
+template <typename T> T add(T x,T y){
+    return x+y;
+}
+*/
