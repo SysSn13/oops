@@ -914,3 +914,113 @@ template <typename T> T add(T x,T y){
     return x+y;
 }
 */
+
+
+/*
+// Namespaces
+
+#include "file_one.cpp"
+#include "file_two.cpp"
+
+// use a namespace by:
+// using namespace one;
+
+// nested namespaces
+
+namespace Outer{
+
+    int num;
+    namespace Inner{
+        int num2;
+        string num = "999"; // overrrides name defined in outer space
+    }
+}
+
+// extending a namespace
+namespace Outer{
+    int temp;
+}
+
+// UnNamed or Anonymous namespaces
+// Unnamed namespace "limits access" of class, variable, function, and objects to "the file in which it is defined". Unnamed namespace functionality is similar to static keywords in C/C++.
+// static keyword limits access of global variables and functions to the file in which they are defined.
+// There is a difference between an unnamed namespace and a static keyword because of which unnamed namespace has an advantage over static. The static keyword can be used with variables, functions, and objects but not with a user-defined class.
+
+namespace{
+    int x;
+    void anonyMethod(){
+        cout<<"x: "<<x<<endl;
+    }
+
+    namespace three{
+        int x =204; // nested namespace can override the names defined in outer scope
+        void display(){
+            cout<<x<<endl;
+        }
+
+    }
+}
+
+// namespace aliases
+
+namespace verylargenamespacename
+{
+    int x;
+    namespace nestednamespace{
+        void display(){
+            cout<<x<<endl;
+        }
+    }
+
+} // namespace verylargenamespacename
+
+namespace shortName= verylargenamespacename;
+namespace nested = shortName::nestednamespace; 
+
+// inline nested namespaces
+
+namespace AppVersion{
+    namespace v1{
+        void display(){
+            cout<<"function from v1\n";
+        }
+    }
+    namespace v2{
+        void display(){
+            cout<<"function from v2\n";
+        }
+    }
+    inline namespace v3{ // after adding inline keyword now you can access v3 members in AppVersion directly
+        void display(){
+            cout<<"function from v3\n";
+        }
+    }
+
+    namespace v3{ // this will also be treated as an inline namespace
+        void otherMethod(){
+            cout<<"other method from v3\n";
+        }
+    }
+}
+int main(){
+    one::displayNum();
+    two::displayNum();
+    Outer::num = 15;
+    cout<<Outer::num<<":" << Outer::Inner::num<<endl;
+    Outer::Inner::num2 = 20;
+    using namespace Outer;
+    cout<<Inner::num2<<"\n";
+
+    x = 25; // not need to use "using" keyword or "scope resolution" operator (::)
+    anonyMethod();
+
+    cout<<x<<" ";
+    three::display();
+    shortName::x= 123;
+    nested::display();
+
+    AppVersion::display();
+    AppVersion::otherMethod();
+    AppVersion::v2::display();
+}
+*/
