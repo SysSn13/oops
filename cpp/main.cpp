@@ -688,3 +688,136 @@ int main(){
 }
 
 */
+
+// set unset flags of IO streams
+/*
+#include <iomanip> // for manipulators
+
+// manipulator functions
+ostream &rightArrow(ostream &output){
+    output<<" ---> ";
+    return output;
+}
+
+istream &getName(istream &input){
+    cout<<"enter your name:\n";
+    return input;
+}
+
+int main(){
+    cout.setf(ios::showpos | ios::showpoint);// or sepearated by commas (a,b,c ...)
+    cout.unsetf(ios::showpos);
+    cout<<100.12<<"\n";
+
+    bool boolVal;
+    //cin.setf(ios::boolalpha);
+    // cin>>boolVal;
+    // or
+    // cin>> boolalpha >> boolVal;
+    cout.setf(ios::boolalpha);
+    cout<<boolVal<<"\n";
+
+    // set precision
+    cout.precision(6); // no effect on intergers only for floating point numbers
+    cout<<123.456789<<"\n";
+    cout.fill('*'); // fill character
+    cout.setf(ios::left); // left justification
+    cout.width(15); // if no of char is less than 15 then it will be padded with fill character
+    cout<<"Hello World!"<<endl;
+    cout<<setw(20)<<setfill('.')<<hex<< 1000<<endl; // manuipluate the output in hexadecimal, only affects within given expression
+
+
+    string name;
+    cin>> getName >> name;
+    cout<<rightArrow << name;
+}   
+*/
+
+// string stream
+/*
+#include <sstream>
+int main(){
+    stringstream ss;
+    ss<<"Hello "<<"World!"<<" Example"; // stream insertion
+    cout<<ss.str()<<endl;
+    string w;
+    ss>>w; // stream extraction
+    cout<<w<<endl;
+    while(getline(ss,w,' ')){
+        cout<<w<<endl;
+    }
+    ss.str(""); // clear the string stream
+}
+*/
+
+
+/*
+// #include preprocessor directive
+
+// importing a file
+
+// #include "filename.cpp" // double quotes for user defined source files
+#include <vector> // for standard library
+
+// Macro: A fragment of code which is given a name
+
+// 1. Object type macros:
+
+#define ll long long
+
+#define lli ll int
+
+#define message "we can define macros in multpile \
+lines using backslash"
+
+// 2. Function macros:
+#define ABS(number) ((number)>0?(number):-(number))
+
+
+#define LINUX 1
+#define MAC 2
+
+#define OS LINUX
+
+int main(){
+    cout<<ABS(10)<<"\n";
+    cout<<ABS(-10.901)<<"\n";
+
+
+    // if endif elif else conditionals Macros
+    #if OS == LINUX
+    cout<<"OS is Linux"<<endl;
+    #elif OS == MAC
+    cout<<"OS is Mac"<<endl;
+    #else
+    cout<<"OS is unknown"<<endl;
+    #endif
+
+    #ifdef OS // ifndef for not defined
+    cout<<"OS is defined"<<endl;
+    #else
+    cout<<"OS is not defined"<<endl;
+    #endif
+
+    #undef OS // undefines a macro
+    #ifdef OS
+    cout<<"OS is defined"<<endl;
+    #else
+    cout<<"OS is not defined"<<endl;
+    #endif
+
+    // predefined macros
+    
+    // __FILE__ // current file name
+    // __LINE__ // current line number
+    // __DATE__ // current date
+    // __TIME__ // current time
+    // __STDC__ // standard C
+    // __cplusplus // C++
+    
+
+   #line 100 "newfile.cpp" // sets the line number and file name
+    
+}
+
+*/
