@@ -1024,3 +1024,14 @@ int main(){
     AppVersion::v2::display();
 }
 */
+/*
+
+// splitting class files
+#include "Person.cpp"
+
+int main(){
+    Person obj;
+    obj.someMethod();
+}
+
+*/
